@@ -1,23 +1,35 @@
 /*
  * Create a list that holds all of your cards
  */
+
  const cards = [
-  "fa fa-star",
-  "fa fa-star",
-  "fa fa-leaf",
-  "fa fa-leaf",
-  "fa fa-pagelines",
-  "fa fa-pagelines",
-  "fa fa-sun-o",
-  "fa fa-sun-o",
-  "fa fa-twitter",
-  "fa fa-twitter",
-  "fa fa-bug",
-  "fa fa-bug",
-  "fa fa-moon-o",
-  "fa fa-moon-o",
-  "fa fa-paw",
-  "fa fa-paw"];
+  "fa-star",
+  "fa-star",
+  "fa-leaf",
+  "fa-leaf",
+  "fa-pagelines",
+  "fa-pagelines",
+  "fa-sun-o",
+  "fa-sun-o",
+  "fa-twitter",
+  "fa-twitter",
+  "fa-bug",
+  "fa-bug",
+  "fa-moon-o",
+  "fa-moon-o",
+  "fa-paw",
+  "fa-paw"];
+
+// to test matches
+/*
+const cards = [
+  "fa-star",
+  "fa-star"
+]
+*/
+
+
+const openCards = [];
 
 
 /*
@@ -38,7 +50,7 @@
    const li=document.createElement('li');
    deck.appendChild(li);
    li.classList.add('card');
-   li.innerHTML = "<i class= '" + sortedCards[x] + "'>";
+   li.innerHTML = "<i class= 'fa " + sortedCards[x] + "'>";
  }
 
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -60,7 +72,6 @@ function shuffle(array) {
 //document.getElementById("MyElement").classList.add('MyClass');
 //document.getElementById("MyElement").classList.remove('MyClass');
 
-
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
@@ -71,3 +82,36 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
+deck.addEventListener('click', displayCard);
+
+function displayCard(evt) {
+  evt.target.classList.add('open', 'show');
+  addOpenCard(evt);
+}
+
+function addOpenCard(evt) {
+  openCards.push(evt.target);
+  //check to see if there has been another card clicked
+  if (openCards.length == 2) {
+    console.log(openCards[0]);
+    console.log(openCards[1]);
+    if (openCards[0].innerHTML == openCards[1].innerHTML) {
+      console.log("There's a match! Do stuff in a new function!");
+    } else {
+      console.log("No match!");
+      noMatch();
+
+    }
+  }
+}
+
+function noMatch() {
+  // change the background color to show error
+  openCards[0].classList.add('nomatch');
+  openCards[1].classList.add('nomatch');
+  setTimeout(function() {
+    openCards[0].classList.remove('open', 'show', 'nomatch');
+    openCards[1].classList.remove('open', 'show', 'nomatch');
+  }, 1500);
+}
