@@ -1,6 +1,23 @@
 /*
  * Create a list that holds all of your cards
  */
+ const cards = [
+  "fa fa-star",
+  "fa fa-star",
+  "fa fa-leaf",
+  "fa fa-leaf",
+  "fa fa-pagelines",
+  "fa fa-pagelines",
+  "fa fa-sun-o",
+  "fa fa-sun-o",
+  "fa fa-twitter",
+  "fa fa-twitter",
+  "fa fa-bug",
+  "fa fa-bug",
+  "fa fa-moon-o",
+  "fa fa-moon-o",
+  "fa fa-paw",
+  "fa fa-paw"];
 
 
 /*
@@ -9,6 +26,20 @@
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
+
+// get array of shuffled cards
+ const sortedCards = shuffle(cards);
+
+// deck container
+ const deck = document.getElementById('deck');
+
+// loop through shuffled cards and add them to the deck
+ for (var x=0; x< sortedCards.length; x++) {
+   const li=document.createElement('li');
+   deck.appendChild(li);
+   li.classList.add('card');
+   li.innerHTML = "<i class= '" + sortedCards[x] + "'>";
+ }
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -24,6 +55,10 @@ function shuffle(array) {
 
     return array;
 }
+
+// remove and change classes
+//document.getElementById("MyElement").classList.add('MyClass');
+//document.getElementById("MyElement").classList.remove('MyClass');
 
 
 /*
