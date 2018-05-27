@@ -20,16 +20,19 @@
   "fa-paw",
   "fa-paw"];
 
+
 // to test matches
 /*
 const cards = [
   "fa-star",
+  "fa-star",
+  "fa-star",
   "fa-star"
-]
+];
 */
 
-
-const openCards = [];
+// array to store two cards for comparison
+let openCards = [];
 
 
 /*
@@ -68,10 +71,6 @@ function shuffle(array) {
     return array;
 }
 
-// remove and change classes
-//document.getElementById("MyElement").classList.add('MyClass');
-//document.getElementById("MyElement").classList.remove('MyClass');
-
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
@@ -83,35 +82,55 @@ function shuffle(array) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
+
 deck.addEventListener('click', displayCard);
 
+// function to flip and display a card
 function displayCard(evt) {
   evt.target.classList.add('open', 'show');
+  //deck.removeEventListener('click', displayCard);
   addOpenCard(evt);
 }
 
+// function to add flipped card to an array for comparison
 function addOpenCard(evt) {
-  openCards.push(evt.target);
-  //check to see if there has been another card clicked
-  if (openCards.length == 2) {
-    console.log(openCards[0]);
-    console.log(openCards[1]);
-    if (openCards[0].innerHTML == openCards[1].innerHTML) {
-      console.log("There's a match! Do stuff in a new function!");
-    } else {
-      console.log("No match!");
-      noMatch();
+  // if first card clicked, just add card to array
+  if (openCards.length === 0) {
+    openCards.push(evt.target);
+  } else {
+    // second card clicked... add card to array
+    openCards.push(evt.target);
 
+    //compare cards
+    if (openCards[0].innerHTML === openCards[1].innerHTML) {
+      console.log("match!");
+      yesMatch();
+    } else {
+      console.log("no match");
+      noMatch();
     }
   }
 }
 
+// function to change color of unmatched card and then flip back over
 function noMatch() {
   // change the background color to show error
   openCards[0].classList.add('nomatch');
   openCards[1].classList.add('nomatch');
   setTimeout(function() {
+    // flip cards back over
     openCards[0].classList.remove('open', 'show', 'nomatch');
     openCards[1].classList.remove('open', 'show', 'nomatch');
-  }, 1500);
+    // clear array for the next match
+    openCards = [];
+  }, 1000);
+}
+
+// function to change color of matched card and disable further clicking
+function yesMatch() {
+  openCards[0].classList.add('match', 'disable');
+  openCards[1].classList.add('match', 'disable');
+  // clear array for the next match
+  openCards = [];
+
 }

@@ -85,8 +85,13 @@ h1 {
     cursor: default;
     background: #f95c3c;
     font-size: 33px;
-    animation: shake .75s;
+    animation: shake 1s;
     animation-iteration-count: 1;
+}
+
+.deck .card.disable {
+    pointer-events: none;
+    cursor: default;
 }
 
 @keyframes shake {
@@ -97,10 +102,10 @@ h1 {
     transform: translate3d(2px, 0, 0);
   }
   30%, 50%, 70% {
-    transform: translate3d(-4px, 0, 0);
+    transform: translate3d(-3px, 0, 0);
   }
   40%, 60% {
-    transform: translate3d(4px, 0, 0);
+    transform: translate3d(3px, 0, 0);
   }
 }
 
