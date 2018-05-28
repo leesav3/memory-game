@@ -34,6 +34,12 @@ const cards = [
 // array to store two cards for comparison
 let openCards = [];
 
+let moves = 0;
+let movesHTML = document.getElementById("moves");
+
+let matches = 0;
+movesHTML.innerHTML = moves;
+
 
 /*
  * Display the cards on the page
@@ -87,9 +93,13 @@ deck.addEventListener('click', displayCard);
 
 // function to flip and display a card
 function displayCard(evt) {
-  evt.target.classList.add('open', 'show');
-  //deck.removeEventListener('click', displayCard);
-  addOpenCard(evt);
+  //console.log(evt.target.hasClass("open show"));
+  if (evt.target.classList.contains('open') === false) {
+    evt.target.classList.add('open', 'show');
+    //deck.removeEventListener('click', displayCard);
+    addOpenCard(evt);
+  }
+
 }
 
 // function to add flipped card to an array for comparison
@@ -101,6 +111,9 @@ function addOpenCard(evt) {
     // second card clicked... add card to array
     openCards.push(evt.target);
 
+    //add one to moves
+    moves += 1;
+    movesHTML.innerHTML = moves;
     //compare cards
     if (openCards[0].innerHTML === openCards[1].innerHTML) {
       console.log("match!");
@@ -132,5 +145,15 @@ function yesMatch() {
   openCards[1].classList.add('match', 'disable');
   // clear array for the next match
   openCards = [];
+  matches += 1;
+  if (matches === 8) {
+    gameOver();
+  }
+
+}
+
+function gameOver() {
+  // TODO: add modal
+  console.log("winner winner chicken dinner!");
 
 }
