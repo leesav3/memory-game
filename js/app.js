@@ -123,15 +123,15 @@ function endTimer() {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
-
+// listen for clicks on the deck (game board)
 deck.addEventListener('click', displayCard);
 
 // function to flip and display a card
 function displayCard(evt) {
-  //console.log(evt.target.hasClass("open show"));
-  if (evt.target.classList.contains('open') === false) {
-    evt.target.classList.add('open', 'show');
-    //deck.removeEventListener('click', displayCard);
+  // only click and display if it is a card
+  if (evt.target.nodeName === 'LI') {
+    // check to see if it is the first click of the game
+    // if it is, start the timer and update flag to true
     if (firstClick === false) {
       //start that timer!
       startTimer();
@@ -139,28 +139,35 @@ function displayCard(evt) {
     }
     addOpenCard(evt);
   }
-
 }
 
 // function to add flipped card to an array for comparison
 function addOpenCard(evt) {
   // if first card clicked, just add card to array
   if (openCards.length === 0) {
-    openCards.push(evt.target);
+    if (evt.target.classList.contains('open') === false) {
+      evt.target.classList.add('open', 'show');
+      openCards.push(evt.target);
+    }
+
   } else {
     // second card clicked... add card to array
-    openCards.push(evt.target);
+    if (evt.target.classList.contains('open') === false) {
+      evt.target.classList.add('open', 'show');
+      openCards.push(evt.target);
 
-    //add one to moves
-    moves += 1;
-    movesHTML.innerHTML = moves;
-    //compare cards
-    if (openCards[0].innerHTML === openCards[1].innerHTML) {
-      console.log("match!");
-      yesMatch();
-    } else {
-      console.log("no match");
-      noMatch();
+      //add one to moves
+      moves += 1;
+      movesHTML.innerHTML = moves;
+
+      //compare cards
+      if (openCards[0].innerHTML === openCards[1].innerHTML) {
+        console.log("match!");
+        yesMatch();
+      } else {
+        console.log("no match");
+        noMatch();
+      }
     }
   }
 }
