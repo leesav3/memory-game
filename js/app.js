@@ -36,10 +36,15 @@ let openCards = [];
 
 let moves = 0;
 let movesHTML = document.getElementById("moves");
+let minutesHTML = document.getElementById("minutes");
+let totalSeconds = 0;
+let secondsHTML = document.getElementById("seconds");
+let firstClick = false;
 
 let matches = 0;
 movesHTML.innerHTML = moves;
 
+let timer;
 
 /*
  * Display the cards on the page
@@ -77,6 +82,31 @@ function shuffle(array) {
     return array;
 }
 
+function startTimer() {
+  timer = setInterval(setTime, 1000);
+}
+
+// setTime function from https://stackoverflow.com/a/5517836
+function setTime() {
+  ++totalSeconds;
+  secondsHTML.innerHTML = pad(totalSeconds % 60);
+  minutesHTML.innerHTML = pad(parseInt(totalSeconds / 60));
+}
+
+// pad function from https://stackoverflow.com/a/5517836
+function pad(val) {
+  var valString = val + "";
+  if (valString.length < 2) {
+    return "0" + valString;
+  } else {
+    return valString;
+  }
+}
+
+function endTimer() {
+  clearInterval(timer);
+}
+
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
@@ -97,6 +127,11 @@ function displayCard(evt) {
   if (evt.target.classList.contains('open') === false) {
     evt.target.classList.add('open', 'show');
     //deck.removeEventListener('click', displayCard);
+    if (firstClick === false) {
+      //start that timer!
+      startTimer();
+      firstClick = true;
+    }
     addOpenCard(evt);
   }
 
@@ -147,13 +182,14 @@ function yesMatch() {
   openCards = [];
   matches += 1;
   if (matches === 8) {
+    // stop timer
+    endTimer();
+
     gameOver();
   }
-
 }
 
 function gameOver() {
   // TODO: add modal
   console.log("winner winner chicken dinner!");
-
 }
