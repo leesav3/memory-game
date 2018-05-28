@@ -46,6 +46,11 @@ movesHTML.innerHTML = moves;
 
 let timer;
 
+// modal variables
+var modal = document.getElementById('myModal');
+var span = document.getElementsByClassName("close")[0];
+var modalText = document.getElementById('modalText');
+
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -190,6 +195,19 @@ function yesMatch() {
 }
 
 function gameOver() {
-  // TODO: add modal
-  console.log("winner winner chicken dinner!");
+  modal.style.display = "block";
+  modalText.innerHTML = "YOU WON!\nYou finished in " + minutesHTML.innerHTML + ":" + secondsHTML.innerHTML + " and " + moves + " moves!";
+}
+
+// Modal functionality from https://www.w3schools.com/howto/howto_css_modals.asp
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
 }
