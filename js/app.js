@@ -44,7 +44,6 @@ let firstClick = false;
 let star1 = document.getElementById("star1");
 let star2 = document.getElementById("star2");
 let star3 = document.getElementById("star3");
-console.log(star3.innerHTML);
 
 // variables for game timer
 let minutesHTML = document.getElementById("minutes");
@@ -56,9 +55,15 @@ let timer;
 let matches = 0;
 
 // modal variables
-var modal = document.getElementById('myModal');
-var span = document.getElementsByClassName("close")[0];
-var modalText = document.getElementById('modalText');
+let modal = document.getElementById('myModal');
+let span = document.getElementsByClassName("close")[0];
+let modalText = document.getElementById('modalText');
+
+// get array of shuffled cards
+const sortedCards = shuffle(cards);
+
+// deck container
+const deck = document.getElementById('deck');
 
 /*
  * Display the cards on the page
@@ -67,20 +72,20 @@ var modalText = document.getElementById('modalText');
  *   - add each card's HTML to the page
  */
 
- movesHTML.innerHTML = moves;
+function startGame() {
+   //update moves on score section
+   movesHTML.innerHTML = moves;
 
-// get array of shuffled cards
- const sortedCards = shuffle(cards);
+   // loop through shuffled cards and add them to the deck
+    for (var x=0; x< sortedCards.length; x++) {
+      const li=document.createElement('li');
+      deck.appendChild(li);
+      li.classList.add('card');
+      li.innerHTML = "<i class= 'fa " + sortedCards[x] + "'>";
+    }
 
-// deck container
- const deck = document.getElementById('deck');
-
-// loop through shuffled cards and add them to the deck
- for (var x=0; x< sortedCards.length; x++) {
-   const li=document.createElement('li');
-   deck.appendChild(li);
-   li.classList.add('card');
-   li.innerHTML = "<i class= 'fa " + sortedCards[x] + "'>";
+    // listen for clicks on the deck (game board)
+    deck.addEventListener('click', displayCard);
  }
 
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -107,7 +112,6 @@ function setTime() {
   ++totalSeconds;
   secondsHTML.innerHTML = pad(totalSeconds % 60);
   minutesHTML.innerHTML = pad(parseInt(totalSeconds / 60));
-
 }
 
 // pad function from https://stackoverflow.com/a/5517836
@@ -135,8 +139,7 @@ function endTimer() {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
-// listen for clicks on the deck (game board)
-deck.addEventListener('click', displayCard);
+
 
 // function to flip and display a card
 function displayCard(evt) {
@@ -176,10 +179,8 @@ function addOpenCard(evt) {
 
       //compare cards
       if (openCards[0].innerHTML === openCards[1].innerHTML) {
-        console.log("match!");
         yesMatch();
       } else {
-        console.log("no match");
         noMatch();
 
       }
@@ -261,3 +262,5 @@ window.onclick = function(event) {
         modal.style.display = "none";
     }
 }
+
+startGame();
