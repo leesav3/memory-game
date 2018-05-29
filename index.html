@@ -17,19 +17,18 @@
         </header>
 
         <section class="score-panel">
-        	<ul class="stars">
-        		<li><i class="fa fa-star"></i></li>
-        		<li><i class="fa fa-star"></i></li>
-        		<li><i class="fa fa-star"></i></li>
-        	</ul>
 
-        	<span id="moves" class="moves"></span> Moves
+              <ul class="stars column">
+            		<li id="star1"><i class="fa fa-star"></i></li>
+            		<li id="star2"><i class="fa fa-star"></i></li>
+            		<li id="star3"><i class="fa fa-star"></i></li>
+            	</ul>
 
-          <span id="minutes">00</span>:<span id="seconds">00<span>
+              <span class="column"><span id="moves" class="moves"></span> Moves</span>
 
-            <div class="restart">
-        		<i class="fa fa-repeat"></i>
-        	</div>
+              <span class="restart column" onclick="restartGame()"><i class="fa fa-repeat"></i></span>
+
+              <span id="timer" class="column"><span id="minutes">00</span>:<span id="seconds">00<span></span>
         </section>
 
         <ul id="deck" class="deck">
@@ -42,6 +41,7 @@
       <div class="modal-content">
         <span class="close">&times;</span>
         <p id="modalText"></p>
+        <p id="btnPlayAgain"><button type="button" onclick="restartGame()">Play Again!</button></p>
       </div>
 
     </div>

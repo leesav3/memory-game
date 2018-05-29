@@ -33,6 +33,18 @@ h1 {
     font-weight: 300;
 }
 
+button {
+    background-color: #02ccba;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 8px;
+}
+
 /*
  * Styles for the deck of cards
  */
@@ -79,6 +91,8 @@ h1 {
     cursor: default;
     background: #02ccba;
     font-size: 33px;
+    animation: grow .5s;
+    animation-iteration-count: 1;
 }
 
 .deck .card.nomatch {
@@ -94,36 +108,58 @@ h1 {
     cursor: default;
 }
 
+@keyframes grow {
+    10% {
+      transform: scale(.8);
+    }
+    30% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    70% {
+      transform: scale(1);
+    }
+    90% {
+      transform: scale(.8);
+    }
+}
+
 @keyframes shake {
-  10%, 90% {
-    transform: translate3d(-1px, 0, 0);
-  }
-  20%, 80% {
-    transform: translate3d(2px, 0, 0);
-  }
-  30%, 50%, 70% {
-    transform: translate3d(-3px, 0, 0);
-  }
-  40%, 60% {
-    transform: translate3d(3px, 0, 0);
-  }
+    10%, 90% {
+      transform: translate3d(-1px, 0, 0);
+    }
+    20%, 80% {
+      transform: translate3d(2px, 0, 0);
+    }
+    30%, 50%, 70% {
+      transform: translate3d(-3px, 0, 0);
+    }
+    40%, 60% {
+      transform: translate3d(3px, 0, 0);
+    }
 }
 
 /*
  * Styles for the Score Panel
  */
-
 .score-panel {
     text-align: left;
     width: 345px;
     margin-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.score-panel .column {
+    width: 25%;
 }
 
 .score-panel .stars {
     margin: 0;
     padding: 0;
     display: inline-block;
-    margin: 0 5px 0 0;
 }
 
 .score-panel .stars li {
@@ -132,8 +168,8 @@ h1 {
 }
 
 .score-panel .restart {
-    float: right;
     cursor: pointer;
+    float: right;
 }
 
 /*
@@ -142,6 +178,7 @@ h1 {
 /* The Modal (background) */
 .modal {
     display: none; /* Hidden by default */
+    /* display: block; */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
     left: 0;
@@ -153,17 +190,20 @@ h1 {
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
-/* Modal Content/Box from https://www.w3schools.com/howto/howto_css_modals.asp*/
+/* Modal Content/Box from https://www.w3schools.com/howto/howto_css_modals.asp */
 .modal-content {
     background-color: #fefefe;
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+    width: 60%; /* Could be more or less, depending on screen size */
+    height: 50%;
     text-align: center;
+    vertical-align: center;
+    font-size: 1.5em;
 }
 
-/* The Close Button from https://www.w3schools.com/howto/howto_css_modals.asp*/
+/* The Close Button from https://www.w3schools.com/howto/howto_css_modals.asp */
 .close {
     color: #aaa;
     float: right;
@@ -176,4 +216,18 @@ h1 {
     color: black;
     text-decoration: none;
     cursor: pointer;
+}
+
+@media screen and (max-width: 675px) {
+  .deck {
+    width: 100%;
+    min-height: auto;
+    padding: 10px;
+  }
+
+  .deck .card {
+    width: 20vw;
+    height: 20vw;
+    margin: 5px;
+  }
 }

@@ -2,6 +2,7 @@
  * Create a list that holds all of your cards
  */
 
+// array of cards for game
  const cards = [
   "fa-star",
   "fa-star",
@@ -34,17 +35,25 @@ const cards = [
 // array to store two cards for comparison
 let openCards = [];
 
+// variables to keep track of moves
 let moves = 0;
 let movesHTML = document.getElementById("moves");
-let minutesHTML = document.getElementById("minutes");
-let totalSeconds = 0;
-let secondsHTML = document.getElementById("seconds");
 let firstClick = false;
 
-let matches = 0;
-movesHTML.innerHTML = moves;
+// variables for stars
+let star1 = document.getElementById("star1");
+let star2 = document.getElementById("star2");
+let star3 = document.getElementById("star3");
+console.log(star3.innerHTML);
 
+// variables for game timer
+let minutesHTML = document.getElementById("minutes");
+let secondsHTML = document.getElementById("seconds");
+let totalSeconds = 0;
 let timer;
+
+// variable to keep track of matches
+let matches = 0;
 
 // modal variables
 var modal = document.getElementById('myModal');
@@ -57,6 +66,8 @@ var modalText = document.getElementById('modalText');
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
+
+ movesHTML.innerHTML = moves;
 
 // get array of shuffled cards
  const sortedCards = shuffle(cards);
@@ -96,6 +107,7 @@ function setTime() {
   ++totalSeconds;
   secondsHTML.innerHTML = pad(totalSeconds % 60);
   minutesHTML.innerHTML = pad(parseInt(totalSeconds / 60));
+
 }
 
 // pad function from https://stackoverflow.com/a/5517836
@@ -145,20 +157,22 @@ function displayCard(evt) {
 function addOpenCard(evt) {
   // if first card clicked, just add card to array
   if (openCards.length === 0) {
-    if (evt.target.classList.contains('open') === false) {
+    //if (evt.target.classList.contains('open') === false) {
       evt.target.classList.add('open', 'show');
       openCards.push(evt.target);
-    }
+    //}
 
   } else {
     // second card clicked... add card to array
     if (evt.target.classList.contains('open') === false) {
+      // temporarily turn off clicks
+      deck.removeEventListener('click', displayCard);
+
       evt.target.classList.add('open', 'show');
       openCards.push(evt.target);
 
       //add one to moves
-      moves += 1;
-      movesHTML.innerHTML = moves;
+      countMoves();
 
       //compare cards
       if (openCards[0].innerHTML === openCards[1].innerHTML) {
@@ -167,6 +181,7 @@ function addOpenCard(evt) {
       } else {
         console.log("no match");
         noMatch();
+
       }
     }
   }
@@ -183,6 +198,8 @@ function noMatch() {
     openCards[1].classList.remove('open', 'show', 'nomatch');
     // clear array for the next match
     openCards = [];
+    // add back event addEventListener
+    deck.addEventListener('click', displayCard);
   }, 1000);
 }
 
@@ -193,17 +210,43 @@ function yesMatch() {
   // clear array for the next match
   openCards = [];
   matches += 1;
-  if (matches === 8) {
-    // stop timer
-    endTimer();
 
+  // add back event addEventListener
+  deck.addEventListener('click', displayCard);
+  if (matches === 8) {
+    // stop timer and display game over message
+    endTimer();
     gameOver();
   }
 }
 
+// function to keep track of moves and star rating
+function countMoves() {
+  moves += 1;
+  movesHTML.innerHTML = moves;
+
+  if (moves === 10) {
+    star3.innerHTML = "<i class='fa fa-star-o'></i>";
+  } else if (moves === 15) {
+    star2.innerHTML = "<i class='fa fa-star-o'></i>";
+  }
+}
+
+function restartGame() {
+  location.reload();
+}
+
 function gameOver() {
   modal.style.display = "block";
-  modalText.innerHTML = "YOU WON!\nYou finished in " + minutesHTML.innerHTML + ":" + secondsHTML.innerHTML + " and " + moves + " moves!";
+  if (minutesHTML.innerHTML == "00") {
+    modalText.innerHTML = "YOU WON!<br><br>You finished in " + secondsHTML.innerHTML + " seconds and<br>" + moves +
+      " moves<br>with a star rating of " + star1.innerHTML + star2.innerHTML + star3.innerHTML;
+  } else {
+    modalText.innerHTML = "YOU WON!<br><br>You finished in " + minutesHTML.innerHTML + " minutes and " +
+      secondsHTML.innerHTML + " seconds and<br>" + moves + " moves<br>with a star rating of " + star1.innerHTML +
+      star2.innerHTML + star3.innerHTML;
+  }
+
 }
 
 // Modal functionality from https://www.w3schools.com/howto/howto_css_modals.asp
