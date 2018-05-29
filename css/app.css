@@ -43,6 +43,7 @@ button {
     display: inline-block;
     font-size: 16px;
     border-radius: 8px;
+    cursor: pointer;
 }
 
 /*
@@ -197,7 +198,7 @@ button {
     padding: 20px;
     border: 1px solid #888;
     width: 60%; /* Could be more or less, depending on screen size */
-    height: 50%;
+    height: 60%;
     text-align: center;
     vertical-align: center;
     font-size: 1.5em;
@@ -218,6 +219,7 @@ button {
     cursor: pointer;
 }
 
+/* Media Queries */
 @media screen and (max-width: 675px) {
   .deck {
     width: 100%;
